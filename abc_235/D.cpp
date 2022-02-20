@@ -2,43 +2,41 @@
 using namespace std;
 using ll = long long;
 
-int A, N;
-const int M = 1000000;
-const int I = 1001001001;
-
-auto push(int v, int d, vector<int> G, queue<int> que){
-    if(G[v] != I){
-        return;
-    }
-    G[v*A] = d + 1;
-    que.push(v);
-}
-
 int main(){
+    int A, N;
     cin >> A >> N;
-    vector<int> G(M, I);
+    const int MX = 1000000;
+    const int INF = 1001001001;
+    vector<int> dist(MX, INF);
     queue<int> que;
-    push(1, 0, G, que);
+    auto push = [&](int v, int d){
+        if(dist[v] != INF){
+            return;
+        }
+        dist[v] = d;
+        que.push(v);
+    };
+    push(1, 0);
     while(!que.empty()){
         int v = que.front();
         que.pop();
-        int d = G[v];
-        if(ll (v) * A < M){
-            push(v * A, d + 1, G, que);
+        int d = dist[v];
+        if(ll (v) * A < MX){
+            push(v * A, d + 1);
         }
         if(v >=10 && v % 10 != 0){
             string s = to_string(v);
             int len = s.size();
-            rotate(s.begin(), s.end() + len - 1, s.end());
+            rotate(s.begin(), s.begin() + len - 1, s.end());
             int u = stoi(s);
-            push(u, d + 1, G, que);
+            push(u, d + 1);
         }
     }
-    if(G[N] == I){
+    if(dist[N] == INF){
         cout << -1 << endl;
     }
     else{
-        cout << G[N] << endl;
+        cout << dist[N] << endl;
     }
     return 0;
 }
