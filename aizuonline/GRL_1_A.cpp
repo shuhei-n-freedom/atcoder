@@ -1,6 +1,5 @@
 #include<bits/stdc++.h>
 using namespace std;
-//なんか動かない
 static const int MAX = 100;
 static const int INFTY = (1<<21);
 static const int WHITE = 0;
